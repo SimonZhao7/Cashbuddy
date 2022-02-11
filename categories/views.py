@@ -12,9 +12,7 @@ def create_category(request):
     if request.method == 'POST':
         form = CreateCategoryForm(request.POST)
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.user = request.user
-            instance.save()
+            form.save(request)
             return redirect('account:home')
     return render(request, 'create_category.html', {'form': form})
 
