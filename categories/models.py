@@ -16,4 +16,4 @@ class Category(models.Model):
         return int(slug) - 562425830
     
     def __str__(self):
-        return "{}: {}".format(self.user, self.name)
+        return self.name
