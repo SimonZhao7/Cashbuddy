@@ -40,7 +40,22 @@ class ChangeUsernameForm(ModelForm):
             raise ValidationError('Incorrect Password')
         return value
         
-    def save(self, instance):
-        instance.username = self.cleaned_data['username']
-        instance.save()
-        return instance
+    def save(self):
+        self.user.username = self.cleaned_data['username']
+        self.user.save()
+        return self.user
+    
+    
+class ChangeBudgetForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        
+    class Meta:
+        model = CustomUser
+        fields = ['budget']
+        
+    def save(self):
+        self.user.budget = self.cleaned_data['budget']
+        self.user.save()
+        return self.user

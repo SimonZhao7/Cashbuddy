@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login as login_user, logout as logout_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from account.forms import RegisterForm, ChangeUsernameForm
+from account.forms import RegisterForm, ChangeUsernameForm, ChangeBudgetForm
 from transactions.models import Transaction
 
 # Create your views here.
@@ -47,7 +47,7 @@ def change_username(request):
     if request.method == 'POST':
         form = ChangeUsernameForm(request.POST, user=request.user)
         if form.is_valid():
-            form.save(request.user)
+            form.save()
             return redirect('account:home')
     return render(request, 'form.html', {'form': form, 'title': 'Change Username', 'btn_text': 'Change'})
 
@@ -63,3 +63,14 @@ def change_password(request):
             login_user(request, user)
             return redirect('account:home')
     return render(request, 'form.html', {'form': form, 'title': 'Change Password', 'btn_text': 'Change'})
+
+
+@login_required
+def change_budget(request):
+    form = ChangeBudgetForm(user=request.user, initial={'budget': request.user.budget})
+    if request.method == 'POST':
+        form = ChangeBudgetForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('account:home')
+    return render(request, 'form.html', {'form': form, 'title': 'Change Budget', 'btn_text': 'Change'})
