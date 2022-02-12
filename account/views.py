@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as login_user, logout as logout_user
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from account.forms import RegisterForm, ChangeUsernameForm, ChangeBudgetForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.tokens import default_token_generator
+from .models import CustomUser
+from .forms import RegisterForm, ChangeUsernameForm, ChangeBudgetForm, ResetPasswordForm
 from transactions.models import Transaction
 
 # Create your views here.
@@ -34,6 +36,42 @@ def login(request):
             login_user(request, form.get_user())
             return redirect('account:home')
     return render(request, 'form.html', {'form': form, 'title': 'Login', 'btn_text': 'Login'})
+
+
+def forgot_password(request):
+    form = PasswordResetForm()
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            form.save(
+                request=request, 
+                subject_template_name="forgot_subject.txt",
+                email_template_name='forgot_subject.txt',
+                from_email='emails.cashbuddy@gmail.com',
+                html_email_template_name='forgot_password.html',
+            )
+            return redirect('account:login')
+    return render(request, 'form.html', {'form': form, 'title': 'Forgot Password', 'btn_text': 'Send Email'})
+
+
+def forgot_password_reset(request, slug, token):
+    try: 
+        user = CustomUser.objects.get(pk=CustomUser.get_id(slug))
+    except CustomUser.DoesNotExist:
+        return render(request, '404.html')
+    
+    # Token doesn't match
+    if not default_token_generator.check_token(user, token):
+        return render(request, '404.html')
+    
+    form = ResetPasswordForm(user)
+    if request.method == 'POST':
+        form = ResetPasswordForm(user, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('account:login')
+    return render(request, 'form.html', {'form': form, 'title': 'Reset Password', 'btn_text': 'Reset Password'})
+
 
 @login_required
 def logout(request):

@@ -12,3 +12,4 @@ media
 # Not Django Related
 .DS_Store
 venv
+.env

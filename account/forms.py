@@ -1,5 +1,5 @@
 from django.forms import ModelForm, PasswordInput
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.core.exceptions import ValidationError
 from .models import CustomUser
 
@@ -59,3 +59,11 @@ class ChangeBudgetForm(ModelForm):
         self.user.budget = self.cleaned_data['budget']
         self.user.save()
         return self.user
+    
+    
+class ResetPasswordForm(SetPasswordForm):
+    def clean(self):
+        data = super().clean()
+        if self.user.check_password(data['new_password1']):
+            raise ValidationError('Your new passowrd can not be your current password')
+        return data
