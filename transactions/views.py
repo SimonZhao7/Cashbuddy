@@ -38,7 +38,7 @@ def view(request, sort_by):
 
     if sort_by == 'all':  
         transactions = Transaction.objects.filter(user=request.user)
-    elif sort_by == 'recent':
+    elif sort_by == 'newest':
         transactions = Transaction.objects.filter(user=request.user).order_by('date_created').reverse()
     elif sort_by == 'oldest':
         transactions = Transaction.objects.filter(user=request.user).order_by('date_created')

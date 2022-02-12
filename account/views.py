@@ -3,12 +3,14 @@ from django.contrib.auth import login as login_user, logout as logout_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from account.forms import RegisterForm
+from transactions.models import Transaction
 
 # Create your views here.
 
 
 def home(request):
-    return render(request, 'home.html')
+    transactions = Transaction.objects.filter(user=request.user).order_by('date_created').reverse()[:5]
+    return render(request, 'home.html', {'transactions': transactions})
 
 
 def register(request):

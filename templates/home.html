@@ -1,5 +1,31 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<p>Home</p>
+<style>
+    h1, h2 {
+        text-align: center;
+    }
+
+    .bar {
+        margin: auto;
+        width: 300px;
+        height: 5px;
+        background: green;
+    }
+</style>
+<h2>{{ user.username }}</h2>
+<h1>${{ user.budget }}</h1>
+<div class="bar"></div>
+<div class="transactions">
+    <h4>Recent Transactions</h4>
+    <hr>
+    {% for transaction in transactions %}
+        <p><b>{{ transaction.category }}</b></p>
+        <p>Date: {{ transaction.date_created }}</p>
+        <p>{{ transaction.title }}</p>
+        <p>${{ transaction.amount }}</p>
+        <br>
+    {% endfor %}
+</div>
+<a href="{% url 'transactions:view' sort_by='all' %}"><button class="btn btn-primary">View All Transactions</button></a>
 {% endblock %}
