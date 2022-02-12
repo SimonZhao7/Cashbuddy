@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}View Categories{% endblock title %}
+{% block content %}
+{% for category in categories %}
+<p>{{ category.name }}</p>
+<a href="{% url 'categories:delete' category.get_slug %}"><button class="btn btn-primary">Delete</button></a>
+{% endfor %}
+{% endblock content %}

@@ -25,5 +25,9 @@ def delete_category(request, slug):
         return render(request, '404.html')
     
     category.delete()
-    return redirect('account:home')
-    
+    return redirect('categories:view')
+
+@login_required
+def view(request):
+    categories = Category.objects.filter(user=request.user)
+    return render(request, 'list_categories.html', {'categories': categories})    
