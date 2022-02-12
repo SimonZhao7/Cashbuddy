@@ -7,6 +7,7 @@
 <p>{{ transaction.title }}</p>
 <p>{{ transaction.description }}</p>
 <p>${{ transaction.amount }}</p>
+<a href="{% url 'transactions:edit' transaction.get_slug %}"><button class="btn btn-primary">Edit</button></a>
 <a href="{% url 'transactions:delete' transaction.get_slug %}"><button class="btn btn-primary">Delete</button></a>
 {% endfor %}
 {% endblock content %}

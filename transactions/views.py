@@ -32,3 +32,24 @@ def delete_transaction(request, slug):
 def view(request):
     transactions = Transaction.objects.filter(user=request.user).order_by('date_created').reverse()
     return render(request, 'list_transactions.html', {'transactions': transactions})    
+
+
+@login_required
+def edit(request, slug):
+    try:
+        transaction = Transaction.objects.get(id=Transaction.get_id(slug))
+    except Transaction.DoesNotExist:
+        return render(request, '404.html')
+    
+    form = CreateTransactionForm(user=request.user, initial={
+        'category': transaction.category,
+        'title': transaction.title,
+        'amount': transaction.amount,
+        'description': transaction.description,
+    })
+    if request.method == 'POST':
+        form = CreateTransactionForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.update(transaction)
+            return redirect('account:home')
+    return render(request, 'create_transaction.html', {'form': form})
