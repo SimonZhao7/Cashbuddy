@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}View Categories{% endblock title %}
+{% block content %}
+{% for transaction in transactions %}
+<p>{{ transaction.date_created }}</p>
+<b>{{ transaction.category }}</b>
+<p>{{ transaction.title }}</p>
+<p>{{ transaction.description }}</p>
+<p>${{ transaction.amount }}</p>
+<a href="{% url 'transactions:delete' transaction.get_slug %}"><button class="btn btn-primary">Delete</button></a>
+{% endfor %}
+{% endblock content %}
