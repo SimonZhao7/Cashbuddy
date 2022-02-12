@@ -14,3 +14,8 @@ class CreateCategoryForm(ModelForm):
         if commit:
             instance.save()
         return instance
+    
+    def update(self, instance):
+        instance.name = self.cleaned_data['name']
+        instance.save()
+        return instance

@@ -30,4 +30,22 @@ def delete_category(request, slug):
 @login_required
 def view(request):
     categories = Category.objects.filter(user=request.user)
-    return render(request, 'list_categories.html', {'categories': categories})    
+    return render(request, 'list_categories.html', {'categories': categories})
+
+
+@login_required
+def edit(request, slug):
+    try: 
+        category = Category.objects.get(id=Category.get_id(slug))
+    except Category.DoesNotExist:
+        return render(request, '404.html')
+    
+    form = CreateCategoryForm(initial={
+        'name': category.name
+    })
+    if request.method == 'POST':
+        form = CreateCategoryForm(request.POST)
+        if form.is_valid():
+            form.update(category)
+            return redirect('categories:view')
+    return render(request, 'edit_category.html', {'form': form})

@@ -3,6 +3,7 @@
 {% block content %}
 {% for category in categories %}
 <p>{{ category.name }}</p>
+<a href="{% url 'categories:edit' category.get_slug %}"><button class="btn btn-primary">Edit</button></a>
 <a href="{% url 'categories:delete' category.get_slug %}"><button class="btn btn-primary">Delete</button></a>
 {% endfor %}
 {% endblock content %}
