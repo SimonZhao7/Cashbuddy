@@ -1,6 +1,5 @@
 from django.forms import ModelForm, PasswordInput
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from .models import CustomUser
 
@@ -37,7 +36,7 @@ class ChangeUsernameForm(ModelForm):
         
     def clean_password(self):
         value = self.cleaned_data['password']
-        if not authenticate(username=self.user.username, password=value):
+        if not self.user.check_password(value):
             raise ValidationError('Incorrect Password')
         return value
         
