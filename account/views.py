@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from .models import CustomUser
-from .forms import RegisterForm, ChangeUsernameForm, ChangeBudgetForm, ResetPasswordForm
+from .forms import RegisterForm, ChangeUsernameForm, ChangeBudgetForm, ResetPasswordForm, ChangeEmailForm
 from transactions.models import Transaction
 
 # Create your views here.
@@ -81,7 +81,7 @@ def logout(request):
 
 @login_required
 def change_username(request):
-    form = ChangeUsernameForm(user=request.user)
+    form = ChangeUsernameForm(user=request.user, initial={'username': request.user.username})
     if request.method == 'POST':
         form = ChangeUsernameForm(request.POST, user=request.user)
         if form.is_valid():
@@ -112,3 +112,14 @@ def change_budget(request):
             form.save()
             return redirect('account:home')
     return render(request, 'form.html', {'form': form, 'title': 'Change Budget', 'btn_text': 'Change'})
+
+
+@login_required
+def change_email(request):
+    form = ChangeEmailForm(user=request.user, initial={'email': request.user.email})
+    if request.method == 'POST':
+        form = ChangeEmailForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('account:home')
+    return render(request, 'form.html', {'form': form, 'title': 'Change Email', 'btn_text': 'Change'})

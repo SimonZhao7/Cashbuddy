@@ -60,6 +60,30 @@ class ChangeBudgetForm(ModelForm):
         self.user.save()
         return self.user
     
+
+class ChangeEmailForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'password']
+        widgets = {
+            'password': PasswordInput()
+        }
+        
+    def clean_password(self):
+        value = self.cleaned_data['password']
+        if not self.user.check_password(value):
+            raise ValidationError('Incorrect Password')
+        return value
+        
+    def save(self):
+        self.user.email = self.cleaned_data['email']
+        self.user.save()
+        return self.user
+    
     
 class ResetPasswordForm(SetPasswordForm):
     def clean(self):
