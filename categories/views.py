@@ -14,7 +14,7 @@ def create_category(request):
         if form.is_valid():
             form.save(request)
             return redirect('account:home')
-    return render(request, 'create_category.html', {'form': form})
+    return render(request, 'form.html', {'form': form, 'title': 'Create Category', 'btn_text': 'Create'})
 
 
 @login_required
@@ -50,4 +50,4 @@ def edit(request, slug):
         if form.is_valid():
             form.update(category)
             return redirect('categories:view')
-    return render(request, 'edit_category.html', {'form': form})
+    return render(request, 'form.html', {'form': form, 'title': 'Edit Category', 'btn_text': 'Edit'})

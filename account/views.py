@@ -20,7 +20,7 @@ def register(request):
         if form.is_valid():
             form.save()
             return redirect('account:login')
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'form.html', {'form': form, 'title': 'Register', 'btn_text': 'Register'})
 
 
 def login(request):
@@ -33,7 +33,7 @@ def login(request):
         if form.is_valid():
             login_user(request, form.get_user())
             return redirect('account:home')
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'form.html', {'form': form, 'title': 'Login', 'btn_text': 'Login'})
 
 @login_required
 def logout(request):
@@ -49,4 +49,4 @@ def change_username(request):
         if form.is_valid():
             form.save(request.user)
             return redirect('account:home')
-    return render(request, 'change_username.html', {'form': form})
+    return render(request, 'form.html', {'form': form, 'title': 'Change Username', 'btn_text': 'Change'})
