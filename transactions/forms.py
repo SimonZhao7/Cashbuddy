@@ -23,18 +23,28 @@ class CreateTransactionForm(ModelForm):
         instance = super().save(commit=False)
         instance.user = self.user
         
+        # Update User Budget
+        self.user.budget -= instance.amount
+        self.user.save()
+        
         if commit:
             instance.save()
         return instance
 
     def update(self, instance):
         data = self.cleaned_data
+        
+        # Edit User Budget
+        self.user.budget += instance.amount
         instance.title = data['title']
         instance.category = data['category']
         instance.date_created = data['date_created']
         instance.amount = data['amount']
         instance.description = data['description']
         instance.save()
+        
+        self.user.budget -= instance.amount
+        self.user.save()
         return instance
     
     

@@ -24,6 +24,8 @@ def delete_category(request, slug):
     except Category.DoesNotExist:
         return render(request, '404.html')
     
+    request.user.budget += sum([transaction.amount for transaction in category.transaction_set.all()])
+    request.user.save()
     category.delete()
     return redirect('categories:view')
 

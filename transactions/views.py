@@ -25,8 +25,10 @@ def delete_transaction(request, slug):
     except Transaction.DoesNotExist:
         return render(request, '404.html')
     
-    transaction.delete()
-    return redirect('transactions:view')
+    request.user.budget += transaction.amount
+    request.user.save()
+    transaction.delete() 
+    return redirect('transactions:view', sort_by='all')
 
 
 @login_required
