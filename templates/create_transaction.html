@@ -4,6 +4,11 @@
 {% block content %}
 <form method="post">
     <legend>Create Transaction</legend>
+    {% if user.budget < 0 %}
+        <div class="alert alert-warning">
+            Warning: You have spent over your budget.
+        </div>
+    {% endif %}
     {{ form|crispy }}
     {% csrf_token %}
     <button type="submit" class="btn btn-primary">Create</button>

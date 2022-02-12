@@ -8,7 +8,7 @@ class Transaction(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     amount = models.DecimalField(max_digits=200, decimal_places=2)
-    description = models.CharField(max_length=1000)
+    description = models.CharField(max_length=1000, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     date_created = models.DateTimeField()
     
