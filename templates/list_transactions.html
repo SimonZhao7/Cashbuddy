@@ -1,6 +1,12 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block title %}View Categories{% endblock title %}
 {% block content %}
+<form method="post">
+    {{ form|crispy }}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Change Sort</button>
+</form>
 {% for transaction in transactions %}
 <p>{{ transaction.date_created }}</p>
 <b>{{ transaction.category }}</b>

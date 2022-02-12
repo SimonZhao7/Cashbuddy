@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelChoiceField, ModelForm
 from categories.models import Category
 from transactions.models import Transaction
+from .constants import SORT_CHOICES
 
 
 class CreateTransactionForm(ModelForm):
@@ -35,3 +36,8 @@ class CreateTransactionForm(ModelForm):
         instance.description = data['description']
         instance.save()
         return instance
+    
+    
+class ViewChoicesForm(forms.Form):
+    sort_by = forms.ChoiceField(choices=SORT_CHOICES)
+        
