@@ -26,7 +26,7 @@ def register(request):
         if form.is_valid():
             form.save()
             return redirect('account:login')
-    return render(request, 'form.html', {'form': form, 'title': 'Register', 'btn_text': 'Register'})
+    return render(request, 'form.html', {'form': form, 'title': 'Register', 'btn_text': 'Register', 'type': 'register'})
 
 
 def login(request):
@@ -39,7 +39,7 @@ def login(request):
         if form.is_valid():
             login_user(request, form.get_user())
             return redirect('account:dashboard')
-    return render(request, 'form.html', {'form': form, 'title': 'Login', 'btn_text': 'Login'})
+    return render(request, 'form.html', {'form': form, 'title': 'Login', 'btn_text': 'Login', 'type': 'login'})
 
 
 def forgot_password(request):

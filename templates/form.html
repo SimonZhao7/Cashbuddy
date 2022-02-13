@@ -8,8 +8,19 @@
 {% block content %}
 <form method="post">
     <legend>{{ title }}</legend>
+    {% if type == 'transaction' and  user.budget < 0 %}
+    <div class="alert alert-warning">
+        Warning: you have spent past your budget.
+    </div>
+    {% endif %}
     {{ form|crispy }}
     {% csrf_token %}
+    {% if type == 'register' %}
+        <p>Already have an account? Log in <a href="{% url 'account:login' %}">here</a></p>
+    {% elif type == 'login' %}
+        <p>Don't have an account? Register <a href="{% url 'account:register' %}">here</a></p>
+        <p>Forgot your password? Reset <a href="{% url 'account:forgot_password' %}">here</a></p>
+    {% endif %}
     <button type="submit" class="btn btn-primary">{{ btn_text }}</button>
 </form>
 {% endblock %}

@@ -15,7 +15,7 @@ def create_transaction(request):
         if form.is_valid():
             form.save()
             return redirect('account:dashboard')
-    return render(request, 'form.html', {'form': form, 'title': 'Create Transaction', 'btn_text': 'Create'})
+    return render(request, 'form.html', {'form': form, 'title': 'Create Transaction', 'btn_text': 'Create', 'type': 'transaction'})
 
 
 @login_required

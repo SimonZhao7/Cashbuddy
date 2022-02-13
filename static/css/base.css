@@ -13,6 +13,7 @@ html, body {
 }
 
 a, a:hover {
+    color: #79A768;
     text-decoration: none;
 }
 
