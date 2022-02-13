@@ -50,11 +50,11 @@ def view(request, sort_by):
         transactions = Transaction.objects.filter(user=request.user).order_by('amount').reverse()
     elif sort_by == 'category':
         transactions = Transaction.objects.filter(user=request.user).order_by('category')
-    p = Paginator(transactions, 10)
-
-    page_number = request.GET.get('page')
-    page_obj = p.get_page(page_number)
     
+    p = Paginator(transactions, 8)
+    page_number = request.GET.get('page', 1)
+    page_obj = p.get_page(page_number)
+
     form = ViewChoicesForm(initial={'sort_by': SORT_CHOICES[SORT_CHOICES.index(choice_value)]})
     if request.method == 'POST':
         form = ViewChoicesForm(request.POST)

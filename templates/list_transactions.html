@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for transaction in transactions %}
+            {% for transaction in page_obj %}
                 <tr>
                     <td scope="row" class="table-category">
                         <div class="td-div">
@@ -59,22 +59,22 @@
             {% endfor %}
         </tbody>
     </table>
-    <div class="pagination">
-      <span class="step-links">
-          {% if page_obj.has_previous %}
-              <a href="?page=1">&laquo; first</a>
-              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-          {% endif %}
-
-          <span class="current">
-              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-          </span>
-
-          {% if page_obj.has_next %}
-              <a href="?page={{ page_obj.next_page_number }}">next</a>
-              <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-          {% endif %}
-      </span>
-    </div>
+    <nav class="pagination-controls">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="?page=1"><<</a></li>
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.get_previous_page }}">Previous</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">>></a></li>
+        </ul>
+    </nav>
 </div>
 {% endblock content %}
