@@ -1,0 +1,62 @@
+*{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+body {
+    width: 100%;
+    background-color:#c1e3b1;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.container {
+    text-align: justify;
+    font-size: 20px;
+    margin: 200px;
+}
+label {
+    font-size: 12px;
+}
+#login {
+    font-size: 20px;   
+    font-weight: bold;
+}
+form {
+    height: 350px;
+    width: 550px;
+    background-color: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 20px;
+}
+p {
+    text-align: center;
+    font-size: smaller;
+
+}
+input {
+    font-size: 10px;
+    width: 100%;
+}
+a {
+    color: #c1e3b1;
+}
+a:link {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+button {
+  border-radius: 5px;
+  background-color: #c1e3b1;
+  border: none;
+  color: white;
+  width: 100%;
+  padding: 15px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
