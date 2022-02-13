@@ -1,0 +1,1 @@
+web: gunicorn cashbuddy.wsgi --log-file -
