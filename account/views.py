@@ -9,10 +9,14 @@ from transactions.models import Transaction
 
 # Create your views here.
 
-@login_required
 def home(request):
+    return render(request, 'home.html')
+
+
+@login_required
+def dashboard(request):
     transactions = Transaction.objects.filter(user=request.user).order_by('date_created').reverse()[:5]
-    return render(request, 'home.html', {'transactions': transactions})
+    return render(request, 'dashboard.html', {'transactions': transactions})
 
 
 def register(request):
@@ -27,14 +31,14 @@ def register(request):
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect('account:home')
+        return redirect('account:dashboard')
     
     form = AuthenticationForm()
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             login_user(request, form.get_user())
-            return redirect('account:home')
+            return redirect('account:dashboard')
     return render(request, 'form.html', {'form': form, 'title': 'Login', 'btn_text': 'Login'})
 
 
@@ -86,7 +90,7 @@ def change_username(request):
         form = ChangeUsernameForm(request.POST, user=request.user)
         if form.is_valid():
             form.save()
-            return redirect('account:home')
+            return redirect('account:dashboard')
     return render(request, 'form.html', {'form': form, 'title': 'Change Username', 'btn_text': 'Change'})
 
 
@@ -99,7 +103,7 @@ def change_password(request):
         if form.is_valid():
             form.save()
             login_user(request, user)
-            return redirect('account:home')
+            return redirect('account:dashboard')
     return render(request, 'form.html', {'form': form, 'title': 'Change Password', 'btn_text': 'Change'})
 
 
@@ -110,7 +114,7 @@ def change_budget(request):
         form = ChangeBudgetForm(request.POST, user=request.user)
         if form.is_valid():
             form.save()
-            return redirect('account:home')
+            return redirect('account:dashboard')
     return render(request, 'form.html', {'form': form, 'title': 'Change Budget', 'btn_text': 'Change'})
 
 
@@ -121,5 +125,5 @@ def change_email(request):
         form = ChangeEmailForm(request.POST, user=request.user)
         if form.is_valid():
             form.save()
-            return redirect('account:home')
+            return redirect('account:dashboard')
     return render(request, 'form.html', {'form': form, 'title': 'Change Email', 'btn_text': 'Change'})

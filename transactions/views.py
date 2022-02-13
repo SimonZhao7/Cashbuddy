@@ -14,7 +14,7 @@ def create_transaction(request):
         form = CreateTransactionForm(request.POST, user=request.user)
         if form.is_valid():
             form.save()
-            return redirect('account:home')
+            return redirect('account:dashboard')
     return render(request, 'form.html', {'form': form, 'title': 'Create Transaction', 'btn_text': 'Create'})
 
 
@@ -76,5 +76,5 @@ def edit(request, slug):
         form = CreateTransactionForm(request.POST, user=request.user)
         if form.is_valid():
             form.update(transaction)
-            return redirect('account:home')
+            return redirect('account:dashboard')
     return render(request, 'form.html', {'form': form, 'title': 'Edit Transaction', 'btn_text': 'Edit'})
