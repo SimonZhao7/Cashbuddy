@@ -89,5 +89,5 @@ class ResetPasswordForm(SetPasswordForm):
     def clean(self):
         data = super().clean()
         if self.user.check_password(data['new_password1']):
-            raise ValidationError('Your new passowrd can not be your current password')
+            raise ValidationError('Your new password can not be your current password')
         return data
