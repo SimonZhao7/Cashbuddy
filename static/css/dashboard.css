@@ -44,6 +44,11 @@ th, td {
     word-wrap: break-word;
 }
 
+.td-div {
+    height: 100px;
+    overflow-y: scroll;
+}
+
 @media screen and (max-width: 978px) {
     .bar {
         margin-bottom: 15px;
