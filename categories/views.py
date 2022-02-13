@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from .forms import CreateCategoryForm
 from .models import Category
 
@@ -31,8 +32,11 @@ def delete_category(request, slug):
 
 @login_required
 def view(request):
-    categories = Category.objects.filter(user=request.user)
-    return render(request, 'list_categories.html', {'categories': categories})
+    categories = Category.objects.filter(user=request.user).order_by('name')
+    paginator = Paginator(categories, 10)
+    page = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page)
+    return render(request, 'list_categories.html', {'page_obj': page_obj})
 
 
 @login_required

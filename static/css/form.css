@@ -1,0 +1,33 @@
+label {
+    font-size: 1rem;
+}
+
+form {
+    background-color: white;
+    width: 600px;
+    max-height: 95%;
+    overflow-y: auto;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1;
+}
+
+.form-control:focus {
+    border-color: #79A768;
+    box-shadow: 0 0 0 0.2rem rgba(121, 167, 104, 25%);
+}
+
+.dropdown-item:active {
+    background-color: #3A6F00;
+}
+
+.btn {
+    width: 100%;
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 575px) {
+    .content {
+        padding: 56px 10px 10px 10px;
+    }
+}

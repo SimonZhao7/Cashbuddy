@@ -25,8 +25,17 @@
             <div class="navbar-nav">
                 <a class="nav-link" href="{% url 'categories:create' %}">Add Category</a>
                 <a class="nav-link" href="{% url 'transactions:create' %}">Add Transaction</a>
+                <a class="nav-link" href="{% url 'categories:view' %}">Categories</a>
                 <a class="nav-link" href="{% url 'transactions:view' 'all' %}">Transactions</a>
-                <a class="nav-link" href="{% url 'account:change_username' %}">Settings</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'account:change_username' %}">Change Username</a>
+                        <a class="dropdown-item" href="{% url 'account:change_password' %}">Change Password</a>
+                        <a class="dropdown-item" href="{% url 'account:change_email' %}">Change Email</a>
+                        <a class="dropdown-item" href="{% url 'account:change_budget' %}">Change Budget</a>
+                    </div>
+                </li>
                 {% if user.pk %}
                     <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
                 {% else %}
