@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import CreateTransactionForm, ViewChoicesForm
 from .models import Transaction
 from .constants import SORT_CHOICES
-
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -50,13 +50,17 @@ def view(request, sort_by):
         transactions = Transaction.objects.filter(user=request.user).order_by('amount').reverse()
     elif sort_by == 'category':
         transactions = Transaction.objects.filter(user=request.user).order_by('category')
+    p = Paginator(transactions, 10)
+
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
     
     form = ViewChoicesForm(initial={'sort_by': SORT_CHOICES[SORT_CHOICES.index(choice_value)]})
     if request.method == 'POST':
         form = ViewChoicesForm(request.POST)
         if form.is_valid():
             return redirect('transactions:view', sort_by=form.cleaned_data['sort_by'])
-    return render(request, 'list_transactions.html', {'transactions': transactions, 'form': form})    
+    return render(request, 'list_transactions.html', {'page_obj': page_obj, 'form': form})    
 
 
 @login_required
