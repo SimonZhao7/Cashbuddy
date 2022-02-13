@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}"/>
+{% endblock %}
+{% block content %}
+<div class="dashboard-content">
+    <h2 class="name-text">{{ user.username }}'s balance:</h2>
+    <h1 class="balance">${{ user.budget }}</h1>
+    <div class="bar"></div>
+    <div class="transactions">
+        <h4>Recent Transactions</h4>
+        <hr>
+        <table class="table">
+            <thead class="table-header">
+                <tr>
+                  <th scope="col">Category</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <td scope="row" class="table-category">
+                        <div class="td-div">
+                            <b>{{ transaction.category }}</b>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-div">
+                            ${{ transaction.amount }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-div">
+                            {{ transaction.date_created }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-div">
+                            {{ transaction.title }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-div">
+                            {{ transaction.description }}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <a href="{% url 'transactions:view' sort_by='all' %}"><button class="btn">View All Transactions</button></a>
+</div>
+{% endblock %}

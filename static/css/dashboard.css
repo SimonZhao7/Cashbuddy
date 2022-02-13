@@ -1,0 +1,77 @@
+h1, h2 {
+    text-align: center;
+}
+
+.btn {
+    width: 100%;
+}
+
+.name-text {
+    font-weight: 300;
+}
+
+.balance {
+    font-size: 3rem;
+}
+
+.bar {
+    margin: auto;
+    width: 300px;
+    height: 5px;
+    background: #3A6F00;
+}
+
+.dashboard-content {
+    display: block;
+    background: white;
+    width: 90%;
+    height: 95%;
+    border-radius: 10px;
+    padding: 40px;
+    overflow: scroll;
+}
+
+/* Table CSS */
+.table-header th {
+    background-color: #3A6F00;
+    color: white;
+    border: none;
+}
+
+th, td {
+    width: 20%;
+    min-width: 125px;
+    word-wrap: break-word;
+}
+
+.td-div {
+    height: 100px;
+    overflow-y: scroll;
+}
+
+@media screen and (max-width: 978px) {
+    .bar {
+        margin-bottom: 15px;
+    }
+
+    .table {
+        display: block;
+        overflow-x: scroll;
+    }   
+
+    h4 {
+        font-size: 1.3rem;
+    }
+
+    .dashboard-content {
+        padding: 20px;
+        border-radius: 5px;
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .table {
+        font-size: 0.85rem;
+    }
+}

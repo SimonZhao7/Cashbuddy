@@ -13,7 +13,7 @@ def create_category(request):
         form = CreateCategoryForm(request.POST)
         if form.is_valid():
             form.save(request)
-            return redirect('account:home')
+            return redirect('account:dashboard')
     return render(request, 'form.html', {'form': form, 'title': 'Create Category', 'btn_text': 'Create'})
 
 
